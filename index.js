@@ -113,8 +113,9 @@ class FloatLabelTextField extends Component {
             <TextFieldHolder withValue={this.state.text}>
               <TextInput
                 {...this.props}
+                value={String(this.props.value)}
                 ref="input"
-                style={[styles.valueText]}
+                style={styles.valueText}
                 defaultValue={this.props.defaultValue}
                 maxLength={this.props.maxLength}
                 onFocus={() => this.setFocus()}
