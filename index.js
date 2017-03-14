@@ -92,7 +92,7 @@ class FloatLabelTextField extends Component {
   }
 
   withBorder() {
-    if (!this.props.noBorder) {
+    if (this.props.withBorder) {
       return styles.withBorder
     }
   }
@@ -191,8 +191,6 @@ class FloatLabelTextField extends Component {
 const styles = {
   container: {
     flex: 1,
-    height: 45,
-    backgroundColor: 'white',
     justifyContent: 'center'
   },
   viewContainer: {
