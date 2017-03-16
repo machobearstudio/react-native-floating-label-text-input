@@ -14,12 +14,11 @@ class FloatingLabel extends Component {
 
     let initialPadding = 9
     let initialOpacity = 0
-
+    
     if (this.props.visible) {
       initialPadding = 5
       initialOpacity = 1
     }
-
     this.state = {
       paddingAnim: new Animated.Value(initialPadding),
       opacityAnim: new Animated.Value(initialOpacity)
@@ -106,10 +105,10 @@ class FloatLabelTextField extends Component {
               ...styles.fieldContainer,
               ...this.withBorder() }}
           >
-            <FloatingLabel visible={this.state.text}>
+            <FloatingLabel visible={String(this.state.text)}>
               <Text style={[styles.fieldLabel, this.labelStyle()]}>{this.placeholderValue()}</Text>
             </FloatingLabel>
-            <TextFieldHolder withValue={this.state.text}>
+            <TextFieldHolder withValue={String(this.state.text)}> 
               <TextInput
                 {...this.props}
                 value={String(this.props.value)}
@@ -172,7 +171,7 @@ class FloatLabelTextField extends Component {
   }
 
   placeholderValue() {
-    if (this.state.text) {
+    if (String(this.state.text)) {
       return this.props.placeholder
     }
   }
