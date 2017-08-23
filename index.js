@@ -216,7 +216,7 @@ const styles = {
     borderColor: '#C8C7CC',
   },
   valueText: {
-    height: (Platform.OS == 'ios' ? 20 : 60),
+    height: 40,
     fontSize: 16,
     color: '#111111'
   },
