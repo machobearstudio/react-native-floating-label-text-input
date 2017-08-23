@@ -216,7 +216,7 @@ const styles = {
     borderColor: '#C8C7CC',
   },
   valueText: {
-    height: 40,
+    height: 50,
     fontSize: 16,
     color: '#111111'
   },
