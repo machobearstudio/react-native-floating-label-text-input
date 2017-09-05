@@ -203,7 +203,7 @@ const styles = {
   },
   fieldLabel: {
     height: 15,
-    fontSize: 10,
+    fontSize: 9,
     color: '#B1B1B1'
   },
   fieldContainer: {
