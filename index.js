@@ -184,7 +184,7 @@ class FloatLabelTextField extends Component {
 const styles = {
   container: {
     flex: 1,
-    height: 45,
+    height: 50,
     justifyContent: 'center'
   },
   viewContainer: {
