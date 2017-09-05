@@ -197,7 +197,7 @@ const styles = {
     left: 10
   },
   fieldLabel: {
-    height: 10,
+    height: 15,
     fontSize: 9,
     color: '#B1B1B1'
   },
