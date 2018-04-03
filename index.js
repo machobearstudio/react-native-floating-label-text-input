@@ -172,7 +172,7 @@ class FloatLabelTextField extends Component {
 
   placeholderValue() {
     if (String(this.state.text)) {
-      return this.props.placeholder
+      return this.props.label
     }
   }
 
