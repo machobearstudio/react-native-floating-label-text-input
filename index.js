@@ -8,15 +8,21 @@ import {
   Platform
 } from 'react-native'
 
+const HORIZONTAL_PADDING = 12
+const LABEL_LOWER_OFFSET = 12
+const LABEL_UPPER_OFFSET = 17
+const VALUE_OFFSET = 15
+const ANIMATION_DURATION = 230
+
 class FloatingLabel extends Component {
   constructor(props) {
     super(props)
 
-    let initialPadding = 9
+    let initialPadding = LABEL_LOWER_OFFSET
     let initialOpacity = 0
     
     if (this.props.visible) {
-      initialPadding = 5
+      initialPadding = LABEL_UPPER_OFFSET
       initialOpacity = 1
     }
     this.state = {
@@ -27,19 +33,19 @@ class FloatingLabel extends Component {
 
   componentWillReceiveProps(newProps) {
     Animated.timing(this.state.paddingAnim, {
-      toValue: newProps.visible ? 5 : 9,
-      duration: 230
+      toValue: newProps.visible ? LABEL_UPPER_OFFSET : LABEL_LOWER_OFFSET,
+      duration: ANIMATION_DURATION
     }).start()
 
     return Animated.timing(this.state.opacityAnim, {
       toValue: newProps.visible ? 1 : 0,
-      duration: 230
+      duration: ANIMATION_DURATION
     }).start()
   }
 
   render() {
     return (
-      <Animated.View style={[styles.floatingLabel, { paddingTop: this.state.paddingAnim, opacity: this.state.opacityAnim }]}>
+      <Animated.View style={[styles.floatingLabel, { paddingBottom: this.state.paddingAnim, opacity: this.state.opacityAnim }]}>
         {this.props.children}
       </Animated.View>
     )
@@ -50,14 +56,14 @@ class TextFieldHolder extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      marginAnim: new Animated.Value(this.props.withValue ? 10 : 0)
+      marginAnim: new Animated.Value(this.props.withValue ? VALUE_OFFSET : 0)
     }
   }
 
   componentWillReceiveProps(newProps) {
     return Animated.timing(this.state.marginAnim, {
-      toValue: newProps.withValue ? 10 : 0,
-      duration: 230
+      toValue: newProps.withValue ? VALUE_OFFSET : 0,
+      duration: ANIMATION_DURATION
     }).start()
   }
 
@@ -85,10 +91,6 @@ class FloatLabelTextField extends Component {
     }
   }
 
-  leftPadding() {
-    return { width: this.props.leftPadding || 0 }
-  }
-
   withBorder() {
     if (this.props.withBorder) {
       return styles.withBorder
@@ -97,31 +99,22 @@ class FloatLabelTextField extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.viewContainer}>
-          <View
-            style={{
-              ...this.props.style,
-              ...styles.fieldContainer,
-              ...this.withBorder() }}
-          >
-            <FloatingLabel visible={String(this.state.text)}>
-              <Text style={[styles.fieldLabel, this.labelStyle()]}>{this.placeholderValue()}</Text>
-            </FloatingLabel>
-            <TextFieldHolder withValue={String(this.state.text)}> 
-              <TextInput
-                {...this.props}
-                value={String(this.props.value)}
-                ref="input"
-                style={styles.valueText}
-                defaultValue={this.props.defaultValue}
-                maxLength={this.props.maxLength}
-                onFocus={() => this.setFocus()}
-                onBlur={() => this.unsetFocus()}
-              />
-            </TextFieldHolder>
-          </View>
-        </View>
+      <View style={[styles.container, this.props.style, this.withBorder()]}>
+        <FloatingLabel visible={String(this.state.text)}>
+          <Text style={[styles.fieldLabel, this.props.labelStyle, this.labelStyle()]}>{this.placeholderValue()}</Text>
+        </FloatingLabel>
+        <TextFieldHolder withValue={String(this.state.text)}> 
+          <TextInput
+            {...this.props}
+            value={String(this.props.value)}
+            ref="input"
+            style={[styles.valueText, this.props.valueStyle]}
+            defaultValue={this.props.defaultValue}
+            maxLength={this.props.maxLength}
+            onFocus={() => this.setFocus()}
+            onBlur={() => this.unsetFocus()}
+          />
+        </TextFieldHolder>
       </View>
     )
   }
@@ -190,35 +183,25 @@ const styles = {
   container: {
     flex: 1,
     height: 50,
-    justifyContent: 'center'
-  },
-  viewContainer: {
-    flex: 1,
-    flexDirection: 'row'
+    justifyContent: 'center',
+    paddingHorizontal: HORIZONTAL_PADDING
   },
   floatingLabel: {
     position: 'absolute',
-    top: 0,
-    left: 10
+    left: HORIZONTAL_PADDING
   },
   fieldLabel: {
     height: 15,
-    fontSize: 9,
-    color: '#B1B1B1'
-  },
-  fieldContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    position: 'relative'
+    fontSize: 11,
+    color: '#111111'
   },
   withBorder: {
     borderBottomWidth: 1 / 2,
     borderColor: '#C8C7CC',
   },
   valueText: {
-    height: 50,
     fontSize: 16,
-    color: '#111111'
+    color: '#111111',
   },
   focused: {
     color: '#1482fe'
