@@ -10,8 +10,8 @@ import {
 
 const HORIZONTAL_PADDING = 12
 const LABEL_LOWER_OFFSET = 12
-const LABEL_UPPER_OFFSET = 17
-const VALUE_OFFSET = 15
+const LABEL_UPPER_OFFSET = 5
+const VALUE_OFFSET = 10
 const ANIMATION_DURATION = 230
 
 class FloatingLabel extends Component {
@@ -20,7 +20,7 @@ class FloatingLabel extends Component {
 
     let initialPadding = LABEL_LOWER_OFFSET
     let initialOpacity = 0
-    
+
     if (this.props.visible) {
       initialPadding = LABEL_UPPER_OFFSET
       initialOpacity = 1
@@ -45,7 +45,7 @@ class FloatingLabel extends Component {
 
   render() {
     return (
-      <Animated.View style={[styles.floatingLabel, { paddingBottom: this.state.paddingAnim, opacity: this.state.opacityAnim }]}>
+      <Animated.View style={[styles.floatingLabel, { top: this.state.paddingAnim, opacity: this.state.opacityAnim }]}>
         {this.props.children}
       </Animated.View>
     )
@@ -69,7 +69,7 @@ class TextFieldHolder extends Component {
 
   render() {
     return (
-      <Animated.View style={{ marginTop: this.state.marginAnim }}>
+      <Animated.View style={[this.props.style, { paddingTop: this.state.marginAnim }]}>
         {this.props.children}
       </Animated.View>
     )
@@ -99,23 +99,21 @@ class FloatLabelTextField extends Component {
 
   render() {
     return (
-      <View style={[styles.container, this.props.style, this.withBorder()]}>
+      <TextFieldHolder withValue={this.state.text} style={[styles.container, this.props.style, this.withBorder()]}>
         <FloatingLabel visible={String(this.state.text)}>
           <Text style={[styles.fieldLabel, this.props.labelStyle, this.labelStyle()]}>{this.placeholderValue()}</Text>
         </FloatingLabel>
-        <TextFieldHolder withValue={String(this.state.text)}> 
-          <TextInput
-            {...this.props}
-            value={String(this.props.value)}
-            ref="input"
-            style={[styles.valueText, this.props.valueStyle]}
-            defaultValue={this.props.defaultValue}
-            maxLength={this.props.maxLength}
-            onFocus={() => this.setFocus()}
-            onBlur={() => this.unsetFocus()}
-          />
-        </TextFieldHolder>
-      </View>
+        <TextInput
+          {...this.props}
+          value={String(this.props.value)}
+          ref="input"
+          style={[styles.valueText, this.props.valueStyle]}
+          defaultValue={this.props.defaultValue}
+          maxLength={this.props.maxLength}
+          onFocus={() => this.setFocus()}
+          onBlur={() => this.unsetFocus()}
+        />
+      </TextFieldHolder>
     )
   }
 
@@ -183,10 +181,10 @@ const styles = {
   container: {
     flex: 1,
     height: 50,
-    justifyContent: 'center',
-    paddingHorizontal: HORIZONTAL_PADDING
+    justifyContent: 'center'
   },
   floatingLabel: {
+    zIndex: 2,
     position: 'absolute',
     left: HORIZONTAL_PADDING
   },
@@ -200,7 +198,10 @@ const styles = {
     borderColor: '#C8C7CC',
   },
   valueText: {
+    flex: 1,
+    height: 50,
     fontSize: 16,
+    paddingHorizontal: HORIZONTAL_PADDING,
     color: '#111111',
   },
   focused: {
