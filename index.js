@@ -31,14 +31,14 @@ class FloatingLabel extends Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
+  componentDidUpdate(prevProps) {
     Animated.timing(this.state.paddingAnim, {
-      toValue: newProps.visible ? LABEL_UPPER_OFFSET : LABEL_LOWER_OFFSET,
+      toValue: this.props.visible ? LABEL_UPPER_OFFSET : LABEL_LOWER_OFFSET,
       duration: ANIMATION_DURATION
     }).start()
 
     return Animated.timing(this.state.opacityAnim, {
-      toValue: newProps.visible ? 1 : 0,
+      toValue: this.props.visible ? 1 : 0,
       duration: ANIMATION_DURATION
     }).start()
   }
