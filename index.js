@@ -60,9 +60,9 @@ class TextFieldHolder extends Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
+  componentDidUpdate(prevProps) {
     return Animated.timing(this.state.marginAnim, {
-      toValue: newProps.withValue ? VALUE_OFFSET : 0,
+      toValue: this.props.withValue ? VALUE_OFFSET : 0,
       duration: ANIMATION_DURATION
     }).start()
   }
@@ -85,9 +85,9 @@ class FloatLabelTextField extends Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.hasOwnProperty('value') && newProps.value !== this.state.text) {
-      this.setState({ text: newProps.value })
+  componentDidUpdate(prevProps) {
+    if (this.props.hasOwnProperty('value') && this.props.value !== this.state.text) {
+      this.setState({ text: this.props.value })
     }
   }
 
@@ -110,8 +110,8 @@ class FloatLabelTextField extends Component {
           style={[styles.valueText, this.props.valueStyle]}
           defaultValue={this.props.defaultValue}
           maxLength={this.props.maxLength}
-          onFocus={() => this.setFocus()}
-          onBlur={() => this.unsetFocus()}
+          onFocus={(e) => this.setFocus(e)}
+          onBlur={(e) => this.unsetFocus(e)}
         />
       </TextFieldHolder>
     )
@@ -137,21 +137,21 @@ class FloatLabelTextField extends Component {
     this.inputRef().clear()
   }
 
-  setFocus() {
+  setFocus(e) {
     this.setState({
       focused: true
     })
     try {
-      return this.props.onFocus()
+      return this.props.onFocus(e)
     } catch (_error) { }
   }
 
-  unsetFocus() {
+  unsetFocus(e) {
     this.setState({
       focused: false
     })
     try {
-      return this.props.onBlur()
+      return this.props.onBlur(e)
     } catch (_error) { }
   }
 
