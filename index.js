@@ -10,7 +10,7 @@ import {
 
 const HORIZONTAL_PADDING = 12
 const LABEL_LOWER_OFFSET = 12
-const LABEL_UPPER_OFFSET = 5
+const LABEL_UPPER_OFFSET = 1
 const VALUE_OFFSET = 10
 const ANIMATION_DURATION = 230
 
@@ -189,7 +189,7 @@ const styles = {
   floatingLabel: {
     zIndex: 2,
     position: 'absolute',
-    left: HORIZONTAL_PADDING
+    left: 0
   },
   fieldLabel: {
     height: 15,
