@@ -208,7 +208,7 @@ const styles = {
     color: '#111111',
   },
   focused: {
-    color: '#1482fe'
+    // we can add back the focused label font color if we need it color: '#1482fe'
   }
 }
 
